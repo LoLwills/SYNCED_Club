@@ -72,39 +72,24 @@
             100% { width: 200vw; opacity: 0; transform: rotate(var(--deg)); }
         }
 
-        /* HERO CONTENT & CONTAINERS */
+        /* HERO CONTENT */
         .hero-container {
             position: relative; z-index: 10;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(15px);
             padding: 40px; border-radius: 25px;
             border: 2px solid var(--neon-cyan);
             text-align: center; box-shadow: 0 0 50px rgba(0, 243, 255, 0.3);
-            max-width: 600px;
         }
         .hero-title {
             font-size: clamp(2.5rem, 10vw, 5rem); margin: 0;
             text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-cyan);
         }
 
-        /* BUTTONS */
-        .join-btn {
-            display: inline-block; margin-top: 25px;
-            padding: 15px 35px; background: transparent;
-            border: 2px solid var(--neon-lime); color: var(--neon-lime);
-            text-decoration: none; font-weight: bold; border-radius: 50px;
-            text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.3s; box-shadow: 0 0 10px var(--neon-lime);
-        }
-        .join-btn:hover {
-            background: var(--neon-lime); color: black;
-            box-shadow: 0 0 30px var(--neon-lime); transform: scale(1.05);
-        }
-
-        /* GAMEPASS & GRID STYLES */
+        /* PAGE SECTIONS */
         .page-section { min-height: 100vh; display: none; padding: 100px 20px 40px; text-align: center; flex-direction: column; align-items: center; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px; width: 100%; max-width: 900px; margin-top: 30px; }
-        .pass-card { background: rgba(255,255,255,0.05); border: 2px solid var(--neon-cyan); padding: 25px; border-radius: 15px; font-weight: bold; transition: 0.3s; }
+        .pass-card { background: rgba(255,255,255,0.05); border: 2px solid var(--neon-cyan); padding: 25px; border-radius: 15px; font-weight: bold; }
         .robux-price { display: block; margin-top: 10px; color: var(--neon-lime); font-size: 1.2rem; }
 
         /* GALLERY & LIGHTBOX */
@@ -113,6 +98,14 @@
         #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 2000; }
         #lightbox img { max-width: 90%; max-height: 85%; border: 2px solid white; border-radius: 10px; }
         #lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 50px; cursor: pointer; color: white; }
+
+        .play-btn {
+            display: inline-block; margin-top: 20px; padding: 12px 30px;
+            background: transparent; border: 2px solid var(--neon-lime);
+            color: var(--neon-lime); text-decoration: none; border-radius: 50px;
+            font-weight: bold; text-transform: uppercase; transition: 0.3s;
+        }
+        .play-btn:hover { background: var(--neon-lime); color: black; box-shadow: 0 0 20px var(--neon-lime); }
 
         @media (max-width: 600px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
@@ -130,8 +123,8 @@
         <button class="menu-btn" onclick="showSection('experience')">Experience</button>
         <button class="menu-btn" onclick="showSection('gamepass')">Gamepass</button>
         <button class="menu-btn" onclick="showSection('gallery')">Gallery</button>
-        <hr style="border: 0.5px solid var(--neon-purple); width: 100%;">
-        <a href="https://www.roblox.com/share?code=f57dccfe75e57d40b7c1b9d6cd9f236d&type=ExperienceDetails&stamp=1776111757669" class="menu-btn" style="text-decoration:none; color:var(--neon-lime); border-color:var(--neon-lime); text-align:center;">Join Club Now</a>
+        <hr style="border: 0.5px solid var(--neon-purple); width: 100%; opacity: 0.3;">
+        <a href="https://www.roblox.com/share?code=f57dccfe75e57d40b7c1b9d6cd9f236d&type=ExperienceDetails&stamp=1776111757669" class="menu-btn" style="text-decoration:none; color:var(--neon-lime); border-color:var(--neon-lime); text-align:center;">Launch Club</a>
     </div>
 
     <section id="home-section" class="home-section" style="display: flex;">
@@ -139,7 +132,6 @@
         <div class="hero-container">
             <h1 class="hero-title">SYNCED CLUB</h1>
             <p style="color: var(--neon-cyan); font-weight: bold; margin-top: 15px; letter-spacing: 2px;">WHERE WE SYNC, YOU FEEL THE MUSIC</p>
-            <a href="https://www.roblox.com/share?code=f57dccfe75e57d40b7c1b9d6cd9f236d&type=ExperienceDetails&stamp=1776111757669" class="join-btn">Launch Experience</a>
         </div>
     </section>
 
@@ -147,9 +139,8 @@
         <div class="hero-container">
             <h2 style="color: var(--neon-cyan);">THE EXPERIENCE</h2>
             <p>Welcome to SYNCED Club! 🎧</p>
-            <p>Step into a world of high-quality synced songs and deep neon reflections.</p>
-            <p>✨ Global Community • 🔊 High Fidelity Audio</p>
-            <a href="https://www.roblox.com/share?code=f57dccfe75e57d40b7c1b9d6cd9f236d&type=ExperienceDetails&stamp=1776111757669" class="join-btn" style="border-color: var(--neon-cyan); color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan);">Play on Roblox</a>
+            <p>High-quality synced songs & neon reflections.</p>
+            <a href="https://www.roblox.com/share?code=f57dccfe75e57d40b7c1b9d6cd9f236d&type=ExperienceDetails&stamp=1776111757669" class="play-btn">Play Now</a>
         </div>
     </section>
 
@@ -183,15 +174,12 @@
 
     <script>
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); }
-
         function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.style.display = 'none');
             document.getElementById(id + '-section').style.display = 'flex';
             toggleMenu();
-            window.scrollTo(0,0);
         }
 
-        /* BRIGHT CENTERED LASERS */
         const colors = ['#00f3ff', '#bc13fe', '#ff00ff', '#39ff14', '#ff4500'];
         const laserBox = document.getElementById('laserBox');
 
