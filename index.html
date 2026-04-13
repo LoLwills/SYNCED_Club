@@ -9,19 +9,18 @@
         :root {
             --neon-cyan: #00f3ff;
             --neon-purple: #bc13fe;
-            --glass: rgba(255, 255, 255, 0.15);
-            --bg-fallback: #050505;
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
         body, html {
             margin: 0; padding: 0;
             height: 100%; width: 100%;
             font-family: 'Rajdhani', sans-serif;
-            background-color: var(--bg-fallback);
-            color: white; overflow-x: hidden;
+            background-color: #050505;
+            color: white; overflow: hidden;
         }
 
-        /* 1. BACKGROUND SYSTEM */
+        /* BACKGROUND SYSTEM */
         #bg-slider {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; z-index: -1;
@@ -35,72 +34,81 @@
         .overlay {
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.75); /* Darker overlay for better text reading */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
         }
 
-        /* 2. NAVIGATION BAR */
+        /* NAVIGATION */
         nav {
             position: fixed; top: 0; width: 100%; height: 60px;
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--neon-cyan); z-index: 1000;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--neon-cyan); z-index: 1000;
         }
         .menu-icon { font-size: 30px; margin-left: 15px; cursor: pointer; color: var(--neon-cyan); }
         .site-title { font-size: 1.5rem; font-weight: 800; letter-spacing: 5px; }
         #ist-clock { margin-right: 15px; color: var(--neon-cyan); font-weight: bold; }
 
-        /* 3. SIDE MENU (SLIDE-OUT) */
+        /* SIDE MENU (CLOSED BY DEFAULT) */
         .side-menu {
             position: fixed; left: -280px; top: 60px; height: 100vh;
-            width: 260px; background: rgba(0,0,0,0.98);
+            width: 250px; background: rgba(0,0,0,0.98);
             display: flex; flex-direction: column; gap: 10px; padding: 20px;
-            transition: 0.4s ease; z-index: 999; border-right: 1px solid var(--neon-purple);
+            transition: 0.4s; z-index: 999; border-right: 1px solid var(--neon-purple);
         }
         .side-menu.open { left: 0; }
         .menu-btn {
             background: var(--glass); border: 1px solid var(--neon-cyan);
             color: white; padding: 15px; border-radius: 5px;
             cursor: pointer; text-align: left; font-weight: 600; text-transform: uppercase;
-            font-family: 'Rajdhani', sans-serif;
         }
 
-        /* 4. CONTENT SECTIONS */
+        /* SECTIONS */
         .page-section {
             min-height: 100vh; display: none; 
-            padding: 100px 20px 40px 20px; text-align: center;
-            box-sizing: border-box;
+            padding: 80px 20px; text-align: center;
+            flex-direction: column; align-items: center; justify-content: center;
         }
-        #home-section { display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 60px; }
 
-        .hero-title { font-size: clamp(2.5rem, 8vw, 5rem); margin: 0; text-shadow: 0 0 15px var(--neon-purple); }
-        .tagline { color: var(--neon-cyan); letter-spacing: 2px; margin-bottom: 30px; font-weight: bold; }
+        .hero-title {
+            font-size: clamp(2.5rem, 10vw, 5rem); margin: 0;
+            text-transform: uppercase; text-shadow: 0 0 20px var(--neon-purple);
+        }
+        .tagline { color: var(--neon-cyan); letter-spacing: 2px; margin-top: 10px; font-weight: bold; }
 
+        /* THE BOX (MOVED TO EXPERIENCE) */
         .feature-box {
             background: rgba(0,0,0,0.8); padding: 25px; border-radius: 12px;
-            border: 1px solid var(--neon-cyan); max-width: 500px; line-height: 1.6;
+            border: 1px solid var(--neon-cyan); max-width: 500px; margin-top: 20px;
+            line-height: 1.6; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
         }
 
-        /* 5. GAMEPASS LIST */
-        .gamepass-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px; max-width: 800px; margin: 0 auto;
+        /* TEAM GRID */
+        .team-grid {
+            display: grid; gap: 15px; max-width: 400px; margin: 20px auto;
+        }
+        .team-card {
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;
+            border-left: 4px solid var(--neon-purple); text-align: left;
+        }
+
+        /* GAMEPASS */
+        .gamepass-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px; max-width: 800px; margin: 20px auto;
         }
         .pass-card {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--neon-purple);
-            padding: 20px; border-radius: 10px; transition: 0.3s;
+            background: var(--glass); border: 1px solid var(--neon-cyan);
+            padding: 15px; border-radius: 10px;
         }
-        .pass-card:hover { transform: scale(1.05); background: rgba(188, 19, 254, 0.1); }
-        .price { color: var(--neon-cyan); font-weight: bold; font-size: 1.2rem; display: block; margin-top: 10px; }
 
-        /* 6. GALLERY POPUP */
+        /* GALLERY */
         #gallery-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 2000; overflow-y: auto;
+            background: #000; z-index: 2000; overflow-y: auto; padding-top: 60px;
         }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 60px 20px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; }
         .gallery-grid img { width: 100%; border-radius: 5px; border: 1px solid var(--neon-cyan); }
         .close-btn { position: fixed; top: 10px; right: 20px; font-size: 50px; color: white; background: none; border: none; z-index: 2001; }
-
     </style>
 </head>
 <body>
@@ -108,7 +116,6 @@
     <div id="bg-slider">
         <div class="slide active" style="background-image: url('image1.jpg');"></div>
         <div class="slide" style="background-image: url('image2.jpg');"></div>
-        <div class="overlay"></div>
     </div>
 
     <nav>
@@ -122,42 +129,49 @@
         <button class="menu-btn" onclick="showSection('experience')">The Experience</button>
         <button class="menu-btn" onclick="showSection('events')">Events</button>
         <button class="menu-btn" onclick="showSection('gamepass')">Gamepass</button>
+        <button class="menu-btn" onclick="showSection('team')">The Team</button>
         <button class="menu-btn" onclick="openGallery()">Gallery</button>
     </div>
 
     <section id="home-section" class="page-section" style="display: flex;">
         <h1 class="hero-title">SYNCED CLUB</h1>
         <p class="tagline">Where we sync, you feel the music</p>
+    </section>
+
+    <section id="experience-section" class="page-section">
+        <h1 class="hero-title" style="color:var(--neon-cyan); font-size: 3rem;">THE EXPERIENCE</h1>
         <div class="feature-box">
-            <p>Welcome to SYNCED Club! 🎧</p>
-            <p>Enjoy high-quality synced songs and amazing vibes.</p>
+            <p><strong>Welcome to SYNCED Club! 🎧</strong></p>
+            <p>Enjoy high-quality synced songs, amazing vibes, and a global music community.</p>
+            <p>Dance, chill, and feel the rhythm together.</p>
             <p>✨ Worldwide tracks • 🔊 Best sound quality</p>
         </div>
     </section>
 
-    <section id="experience-section" class="page-section">
-        <h1 class="hero-title" style="color:var(--neon-cyan)">THE EXPERIENCE</h1>
-        <div class="feature-box" style="margin: 20px auto;">
-            <p>Step into the ultimate atmosphere. High-energy beats, global community, and the best audio experience on Roblox.</p>
-        </div>
-    </section>
-
     <section id="events-section" class="page-section">
-        <h1 class="hero-title" style="color:var(--neon-purple)">UPCOMING EVENTS</h1>
-        <div class="feature-box" style="margin: 20px auto; border-color: var(--neon-purple);">
+        <h1 class="hero-title" style="color:var(--neon-purple); font-size: 3rem;">EVENTS</h1>
+        <div class="feature-box" style="border-color: var(--neon-purple);">
             <p><strong>APRIL 18TH SPECIAL</strong></p>
-            <p>Join us for the big celebration. Surprise prizes and elite vibes incoming!</p>
+            <p>Big Surprise Prize celebration! Don't miss out on the elite energy.</p>
         </div>
     </section>
 
     <section id="gamepass-section" class="page-section">
-        <h1 class="hero-title" style="margin-bottom: 30px;">GAMEPASS SHOP</h1>
-        <div class="gamepass-container">
-            <div class="pass-card"><strong>VIP</strong><span class="price">1 Robux</span></div>
-            <div class="pass-card"><strong>VVIP</strong><span class="price">149 Robux</span></div>
-            <div class="pass-card"><strong>HD COMMAND</strong><span class="price">75 Robux</span></div>
-            <div class="pass-card"><strong>MONEY GUN</strong><span class="price">25 Robux</span></div>
-            <div class="pass-card"><strong>GLOWSTICKS</strong><span class="price">85 Robux</span></div>
+        <h1 class="hero-title" style="font-size: 3rem; margin-bottom: 20px;">GAMEPASS</h1>
+        <div class="gamepass-grid">
+            <div class="pass-card">VIP<br><span style="color:var(--neon-cyan)">1 Robux</span></div>
+            <div class="pass-card">VVIP<br><span style="color:var(--neon-cyan)">149 Robux</span></div>
+            <div class="pass-card">HD Command<br><span style="color:var(--neon-cyan)">75 Robux</span></div>
+            <div class="pass-card">Money Gun<br><span style="color:var(--neon-cyan)">25 Robux</span></div>
+            <div class="pass-card">Glowsticks<br><span style="color:var(--neon-cyan)">85 Robux</span></div>
+        </div>
+    </section>
+
+    <section id="team-section" class="page-section">
+        <h1 class="hero-title" style="font-size: 3rem; color: var(--neon-purple);">THE TEAM</h1>
+        <div class="team-grid">
+            <div class="team-card"><strong>SYNC x Mango</strong><br><span style="font-size: 0.8rem; color: var(--neon-cyan);">[OWNER]</span></div>
+            <div class="team-card"><strong>SYNC x Sara</strong><br><span style="font-size: 0.8rem; color: var(--neon-cyan);">[HEAD ADMIN]</span></div>
         </div>
     </section>
 
@@ -176,14 +190,15 @@
         function showSection(sectionId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.style.display = 'none');
             const target = document.getElementById(sectionId + '-section');
-            target.style.display = (sectionId === 'home') ? 'flex' : 'block';
+            target.style.display = (sectionId === 'home') ? 'flex' : 'flex';
+            if(sectionId !== 'home') target.style.display = 'flex';
             toggleMenu();
-            window.scrollTo(0,0);
         }
 
         function openGallery() { document.getElementById('gallery-overlay').style.display = 'block'; toggleMenu(); }
         function closeGallery() { document.getElementById('gallery-overlay').style.display = 'none'; }
 
+        // BG SLIDER
         const slides = document.querySelectorAll('.slide');
         let current = 0;
         setInterval(() => {
@@ -192,6 +207,7 @@
             slides[current].classList.add('active');
         }, 5000);
 
+        // IST CLOCK
         function updateClock() {
             const now = new Date();
             const istTime = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour12: false });
