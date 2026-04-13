@@ -60,7 +60,7 @@
         }
         .laser-beam {
             position: absolute; height: 3px; width: 100vw;
-            background: linear-gradient(90deg, #fff, var(--color), transparent); /* Bright White Core */
+            background: linear-gradient(90deg, #fff, var(--color), transparent);
             filter: drop-shadow(0 0 15px var(--color)) contrast(150%);
             opacity: 1;
             transform-origin: left center;
@@ -72,33 +72,39 @@
             100% { width: 200vw; opacity: 0; transform: rotate(var(--deg)); }
         }
 
-        /* HERO CONTENT */
+        /* HERO CONTENT & CONTAINERS */
         .hero-container {
             position: relative; z-index: 10;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(15px);
             padding: 40px; border-radius: 25px;
             border: 2px solid var(--neon-cyan);
             text-align: center; box-shadow: 0 0 50px rgba(0, 243, 255, 0.3);
+            max-width: 600px;
         }
         .hero-title {
             font-size: clamp(2.5rem, 10vw, 5rem); margin: 0;
             text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-cyan);
         }
 
-        /* GAMEPASS SECTION */
+        /* BUTTONS */
+        .join-btn {
+            display: inline-block; margin-top: 25px;
+            padding: 15px 35px; background: transparent;
+            border: 2px solid var(--neon-lime); color: var(--neon-lime);
+            text-decoration: none; font-weight: bold; border-radius: 50px;
+            text-transform: uppercase; letter-spacing: 2px;
+            transition: 0.3s; box-shadow: 0 0 10px var(--neon-lime);
+        }
+        .join-btn:hover {
+            background: var(--neon-lime); color: black;
+            box-shadow: 0 0 30px var(--neon-lime); transform: scale(1.05);
+        }
+
+        /* GAMEPASS & GRID STYLES */
         .page-section { min-height: 100vh; display: none; padding: 100px 20px 40px; text-align: center; flex-direction: column; align-items: center; }
-        .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 20px; width: 100%; max-width: 900px; margin-top: 30px;
-        }
-        .pass-card {
-            background: rgba(255,255,255,0.05); border: 2px solid var(--neon-cyan);
-            padding: 25px; border-radius: 15px; font-weight: bold;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
-            transition: 0.3s;
-        }
-        .pass-card:hover { transform: translateY(-5px); border-color: var(--neon-purple); box-shadow: 0 0 25px var(--neon-purple); }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px; width: 100%; max-width: 900px; margin-top: 30px; }
+        .pass-card { background: rgba(255,255,255,0.05); border: 2px solid var(--neon-cyan); padding: 25px; border-radius: 15px; font-weight: bold; transition: 0.3s; }
         .robux-price { display: block; margin-top: 10px; color: var(--neon-lime); font-size: 1.2rem; }
 
         /* GALLERY & LIGHTBOX */
@@ -124,6 +130,8 @@
         <button class="menu-btn" onclick="showSection('experience')">Experience</button>
         <button class="menu-btn" onclick="showSection('gamepass')">Gamepass</button>
         <button class="menu-btn" onclick="showSection('gallery')">Gallery</button>
+        <hr style="border: 0.5px solid var(--neon-purple); width: 100%;">
+        <a href="https://www.roblox.com/share?code=f57dccfe75e57d40b7c1b9d6cd9f236d&type=ExperienceDetails&stamp=1776111757669" class="menu-btn" style="text-decoration:none; color:var(--neon-lime); border-color:var(--neon-lime); text-align:center;">Join Club Now</a>
     </div>
 
     <section id="home-section" class="home-section" style="display: flex;">
@@ -131,11 +139,22 @@
         <div class="hero-container">
             <h1 class="hero-title">SYNCED CLUB</h1>
             <p style="color: var(--neon-cyan); font-weight: bold; margin-top: 15px; letter-spacing: 2px;">WHERE WE SYNC, YOU FEEL THE MUSIC</p>
+            <a href="https://www.roblox.com/share?code=f57dccfe75e57d40b7c1b9d6cd9f236d&type=ExperienceDetails&stamp=1776111757669" class="join-btn">Launch Experience</a>
+        </div>
+    </section>
+
+    <section id="experience-section" class="page-section">
+        <div class="hero-container">
+            <h2 style="color: var(--neon-cyan);">THE EXPERIENCE</h2>
+            <p>Welcome to SYNCED Club! 🎧</p>
+            <p>Step into a world of high-quality synced songs and deep neon reflections.</p>
+            <p>✨ Global Community • 🔊 High Fidelity Audio</p>
+            <a href="https://www.roblox.com/share?code=f57dccfe75e57d40b7c1b9d6cd9f236d&type=ExperienceDetails&stamp=1776111757669" class="join-btn" style="border-color: var(--neon-cyan); color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan);">Play on Roblox</a>
         </div>
     </section>
 
     <section id="gamepass-section" class="page-section">
-        <h1 style="color: var(--neon-purple); text-shadow: 0 0 15px var(--neon-purple);">GAMEPASS STORE</h1>
+        <h1 style="color: var(--neon-purple);">GAMEPASS STORE</h1>
         <div class="grid-container">
             <div class="pass-card">VIP ACCESS<span class="robux-price">1 Robux</span></div>
             <div class="pass-card">VVIP PRIVILEGE<span class="robux-price">149 Robux</span></div>
@@ -147,7 +166,6 @@
 
     <section id="gallery-section" class="page-section">
         <h1>CLUB GALLERY</h1>
-        <p style="color: var(--neon-cyan); margin-bottom: 20px;">Touch a photo to expand it</p>
         <div class="gallery-grid">
             <img src="image1.jpg" onclick="openLightbox(this.src)">
             <img src="image2.jpg" onclick="openLightbox(this.src)">
@@ -158,14 +176,6 @@
             <img src="image7.jpg" onclick="openLightbox(this.src)">
             <img src="image8.jpg" onclick="openLightbox(this.src)">
             <img src="image9.jpg" onclick="openLightbox(this.src)">
-        </div>
-    </section>
-
-    <section id="experience-section" class="page-section">
-        <div class="hero-container" style="max-width: 500px;">
-            <h2>VIBE CHECK</h2>
-            <p>Welcome to SYNCED Club! 🎧</p>
-            <p>High-quality synced songs & neon reflections.</p>
         </div>
     </section>
 
@@ -181,7 +191,7 @@
             window.scrollTo(0,0);
         }
 
-        /* BRIGHTER CENTERED LASERS */
+        /* BRIGHT CENTERED LASERS */
         const colors = ['#00f3ff', '#bc13fe', '#ff00ff', '#39ff14', '#ff4500'];
         const laserBox = document.getElementById('laserBox');
 
@@ -190,14 +200,12 @@
             beam.className = 'laser-beam';
             const color = colors[Math.floor(Math.random() * colors.length)];
             const deg = Math.floor(Math.random() * 360);
-            
             beam.style.setProperty('--color', color);
             beam.style.setProperty('--deg', deg + 'deg');
-            
             laserBox.appendChild(beam);
             setTimeout(() => beam.remove(), 1500);
         }
-        setInterval(spawnLaser, 100); /* Faster spawning for more light */
+        setInterval(spawnLaser, 120);
 
         function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').style.display = 'flex'; }
         function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
