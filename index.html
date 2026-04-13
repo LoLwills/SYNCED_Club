@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNCED Club | Official Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-purple: #bc13fe;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            height: 100%; width: 100%;
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #000;
+            color: white; overflow: hidden;
+        }
+
+        /* 1. BACKGROUND SLIDER */
+        #bg-slider {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; z-index: -1;
+        }
+        .slide {
+            position: absolute; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 2s ease-in-out;
+        }
+        .active { opacity: 1; }
+        .overlay {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.85) 100%);
+        }
+
+        /* 2. TOP NAVIGATION BAR */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass); z-index: 100;
+        }
+        .menu-icon { font-size: 28px; margin-left: 20px; cursor: pointer; color: var(--neon-cyan); }
+        .site-title { font-size: 1.8rem; font-weight: 800; letter-spacing: 5px; text-transform: uppercase; }
+        #ist-clock { margin-right: 20px; font-weight: bold; color: var(--neon-cyan); font-family: monospace; }
+
+        /* 3. SIDE MENU */
+        .side-menu {
+            position: fixed; left: 20px; top: 100px;
+            display: flex; flex-direction: column; gap: 12px; z-index: 90;
+        }
+        .menu-btn {
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 12px 25px; border-radius: 4px;
+            cursor: pointer; transition: 0.4s; text-align: left;
+            width: 200px; font-weight: 600; text-transform: uppercase;
+        }
+        .menu-btn:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            transform: translateX(10px);
+        }
+
+        /* 4. CENTER CONTENT */
+        .hero-content {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; width: 90%;
+        }
+        .hero-content h1 {
+            font-size: clamp(3rem, 10vw, 6rem); margin: 0;
+            text-transform: uppercase; letter-spacing: 10px;
+            text-shadow: 0 0 20px var(--neon-purple);
+        }
+        .tagline {
+            font-size: 1.2rem; margin-top: 10px; letter-spacing: 3px;
+            color: var(--neon-cyan); font-weight: 400; text-transform: uppercase;
+        }
+
+        /* 5. INFO BOX (EXACT INFO FROM PHOTOS) */
+        .feature-box {
+            position: fixed; bottom: 30px; right: 30px;
+            max-width: 380px; padding: 20px;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(15px);
+            border-right: 4px solid var(--neon-cyan);
+            border-radius: 10px 0 0 10px; text-align: right;
+        }
+        .feature-box p { margin: 5px 0; font-size: 1rem; line-height: 1.4; opacity: 0.9; }
+
+        /* 6. GALLERY POPUP */
+        #gallery-overlay {
+            display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background: rgba(0,0,0,0.95); 
+            z-index: 1000; overflow-y: auto; backdrop-filter: blur(20px);
+        }
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; padding: 40px; margin-top: 40px;
+        }
+        .gallery-grid img { width: 100%; border-radius: 8px; border: 1px solid var(--glass); }
+        .close-btn { position: fixed; top: 20px; right: 30px; background: none; border: none; color: white; font-size: 50px; cursor: pointer; z-index: 1001; }
+
+        @media (max-width: 600px) {
+            .side-menu { display: none; }
+            .feature-box { bottom: 10px; right: 10px; left: 10px; text-align: center; border-right: none; border-top: 4px solid var(--neon-cyan); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bg-slider">
+        <div class="slide active" style="background-image: url('image1.jpg');"></div>
+        <div class="slide" style="background-image: url('image2.jpg');"></div>
+        <div class="overlay"></div>
+    </div>
+
+    <nav>
+        <div class="menu-icon">☰</div>
+        <div class="site-title">SYNCED</div>
+        <div id="ist-clock">IND: 00:00:00</div>
+    </nav>
+
+    <div class="side-menu">
+        <button class="menu-btn" onclick="location.reload()">Home</button>
+        <button class="menu-btn">The Experience</button>
+        <button class="menu-btn">Events</button>
+        <button class="menu-btn" onclick="openGallery()">Gallery</button>
+        <button class="menu-btn">VIP & Perks</button>
+    </div>
+
+    <div class="hero-content">
+        <h1>SYNCED CLUB</h1>
+        <div class="tagline">Where we sync, you feel the music</div>
+    </div>
+
+    <div class="feature-box">
+        <p><strong>Welcome to SYNCED Club! 🎧</strong></p>
+        <p>Enjoy high-quality synced songs, amazing vibes, and a global music community.</p>
+        <p>Dance, chill, and feel the rhythm together.</p>
+        <p>✨ Worldwide tracks • 🔊 Best sound quality</p>
+    </div>
+
+    <div id="gallery-overlay">
+        <button class="close-btn" onclick="closeGallery()">&times;</button>
+        <div class="gallery-grid">
+            <img src="image1.jpg"><img src="image2.jpg"><img src="image3.jpg">
+            <img src="image4.jpg"><img src="image5.jpg"><img src="image6.jpg">
+            <img src="image7.jpg"><img src="image8.jpg"><img src="image9.jpg">
+        </div>
+    </div>
+
+    <script>
+        // BACKGROUND SLIDER (image1 & image2)
+        const slides = document.querySelectorAll('.slide');
+        let current = 0;
+        setInterval(() => {
+            slides[current].classList.remove('active');
+            current = (current + 1) % slides.length;
+            slides[current].classList.add('active');
+        }, 5000);
+
+        // LIVE IST CLOCK
+        function updateClock() {
+            const now = new Date();
+            const istTime = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour12: false });
+            document.getElementById('ist-clock').innerHTML = "IND: " + istTime;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // GALLERY FUNCTIONS
+        function openGallery() { document.getElementById('gallery-overlay').style.display = 'block'; }
+        function closeGallery() { document.getElementById('gallery-overlay').style.display = 'none'; }
+    </script>
+</body>
+</html>
