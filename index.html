@@ -9,6 +9,9 @@
         :root {
             --neon-cyan: #00f3ff;
             --neon-purple: #bc13fe;
+            --neon-pink: #ff00ff;
+            --neon-lime: #39ff14;
+            --neon-orange: #ff4500;
             --dark-bg: #050505;
             --glass: rgba(255, 255, 255, 0.1);
         }
@@ -48,7 +51,7 @@
             text-transform: uppercase; font-family: 'Rajdhani';
         }
 
-        /* BRIGHT NEON LASER HOME SECTION */
+        /* 5-COLOR LIGHT SPEED LASERS */
         .home-section {
             position: relative; height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -58,26 +61,43 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
             pointer-events: none;
         }
-        .laser-bg::before, .laser-bg::after {
-            content: ""; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%;
-            background-image: repeating-linear-gradient(45deg, transparent 0%, var(--neon-cyan) 0.5%, transparent 1%, var(--neon-purple) 1.5%, transparent 2%);
-            opacity: 0.6; filter: blur(1px) drop-shadow(0 0 10px var(--neon-cyan));
-            animation: laser-rotate 10s linear infinite, laser-flicker 2s infinite;
-        }
-        .laser-bg::after { animation-duration: 8s; animation-direction: reverse; opacity: 0.4; filter: blur(2px) drop-shadow(0 0 15px var(--neon-purple)); }
 
-        @keyframes laser-rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes laser-flicker { 0%, 100% { opacity: 0.6; } 50% { opacity: 0.3; } }
+        .laser-bg::before, .laser-bg::after {
+            content: ""; position: absolute; top: -150%; left: -150%; width: 400%; height: 400%;
+            background-image: repeating-linear-gradient(45deg, 
+                transparent 0%, 
+                var(--neon-cyan) 0.5%, 
+                transparent 1%,
+                var(--neon-purple) 1.5%,
+                transparent 2%,
+                var(--neon-pink) 2.5%,
+                transparent 3%,
+                var(--neon-lime) 3.5%,
+                transparent 4%,
+                var(--neon-orange) 4.5%,
+                transparent 5%
+            );
+            opacity: 0.9;
+            filter: drop-shadow(0 0 10px white);
+            animation: laser-hyper-rotate 4s linear infinite;
+        }
+        .laser-bg::after { animation-duration: 3s; animation-direction: reverse; opacity: 0.7; }
+
+        @keyframes laser-hyper-rotate { 
+            0% { transform: rotate(0deg) scale(1); } 
+            50% { transform: rotate(180deg) scale(1.3); } 
+            100% { transform: rotate(360deg) scale(1); } 
+        }
 
         .hero-title {
             position: relative; z-index: 10;
             font-size: clamp(2.5rem, 12vw, 5.5rem); margin: 0;
             text-transform: uppercase; letter-spacing: 5px;
-            text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-cyan), 0 0 60px #fff;
+            text-shadow: 0 0 20px #fff, 0 0 40px var(--neon-cyan), 0 0 60px var(--neon-purple);
         }
-        .tagline { position: relative; z-index: 10; color: var(--neon-cyan); font-weight: bold; margin-top: 10px; font-size: 1rem; }
+        .tagline { position: relative; z-index: 10; color: #fff; font-weight: bold; margin-top: 10px; font-size: 0.9rem; text-transform: uppercase; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px; }
 
-        /* PAGE SECTIONS */
+        /* SECTIONS */
         .page-section {
             min-height: 100vh; display: none; 
             padding: 100px 20px 40px; text-align: center;
@@ -87,34 +107,30 @@
         .feature-box {
             background: rgba(0,0,0,0.85); padding: 25px; border-radius: 12px;
             border: 2px solid var(--neon-cyan); width: 100%; max-width: 550px;
-            line-height: 1.6; font-size: 1rem; box-shadow: 0 0 15px var(--neon-cyan);
+            line-height: 1.6; box-shadow: 0 0 15px var(--neon-cyan);
         }
 
         /* GRIDS */
         .grid-container {
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 15px; width: 100%; max-width: 900px; margin-top: 20px;
         }
-        .pass-card {
-            background: var(--glass); border: 1px solid var(--neon-cyan);
-            padding: 15px; border-radius: 10px; font-weight: bold;
-        }
+        .pass-card { background: var(--glass); border: 1px solid var(--neon-cyan); padding: 15px; border-radius: 10px; font-weight: bold; }
+        
         .gallery-grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 10px; width: 100%; max-width: 900px; padding: 20px;
+            gap: 10px; width: 100%; max-width: 900px; padding: 10px;
         }
         .gallery-grid img {
             width: 100%; aspect-ratio: 16/9; object-fit: cover;
             border-radius: 5px; border: 1px solid var(--neon-cyan);
         }
 
-        /* MOBILE OPTIMIZATION */
+        /* MOBILE */
         @media (max-width: 600px) {
             .gallery-grid { grid-template-columns: repeat(2, 1fr); }
             .side-menu { width: 220px; }
             .hero-title { font-size: 2.8rem; }
-            .grid-container { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
