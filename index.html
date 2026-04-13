@@ -9,6 +9,7 @@
         :root {
             --neon-cyan: #00f3ff;
             --neon-purple: #bc13fe;
+            --dark-bg: #050505;
             --glass: rgba(255, 255, 255, 0.1);
         }
 
@@ -16,28 +17,11 @@
             margin: 0; padding: 0;
             height: 100%; width: 100%;
             font-family: 'Rajdhani', sans-serif;
-            background-color: #050505;
+            background-color: var(--dark-bg);
             color: white; overflow-x: hidden;
         }
 
-        /* BACKGROUND SYSTEM */
-        #bg-slider {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; z-index: -1;
-        }
-        .slide {
-            position: absolute; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 2s ease-in-out;
-        }
-        .active { opacity: 1; }
-        .overlay {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
-        }
-
-        /* NAVIGATION */
+        /* NAVIGATION BAR */
         nav {
             position: fixed; top: 0; width: 100%; height: 60px;
             display: flex; justify-content: space-between; align-items: center;
@@ -45,90 +29,91 @@
             border-bottom: 1px solid var(--neon-cyan); z-index: 1000;
         }
         .menu-icon { font-size: 30px; margin-left: 15px; cursor: pointer; color: var(--neon-cyan); }
-        .site-title { font-size: 1.2rem; font-weight: 800; letter-spacing: 3px; }
-        #ist-clock { margin-right: 15px; color: var(--neon-cyan); font-weight: bold; font-size: 0.8rem; }
+        .site-title { font-size: 1.3rem; font-weight: 800; letter-spacing: 4px; }
+        #ist-clock { margin-right: 15px; color: var(--neon-cyan); font-weight: bold; font-size: 0.9rem; }
 
         /* SIDE MENU */
         .side-menu {
-            position: fixed; left: -280px; top: 60px; height: 100vh;
-            width: 250px; background: rgba(0,0,0,0.98);
-            display: flex; flex-direction: column; gap: 10px; padding: 20px;
-            transition: 0.4s; z-index: 999; border-right: 1px solid var(--neon-purple);
+            position: fixed; left: -300px; top: 60px; height: 100vh;
+            width: 260px; background: rgba(0,0,0,0.98);
+            display: flex; flex-direction: column; gap: 12px; padding: 25px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            z-index: 999; border-right: 1px solid var(--neon-purple);
         }
         .side-menu.open { left: 0; }
         .menu-btn {
             background: var(--glass); border: 1px solid var(--neon-cyan);
             color: white; padding: 15px; border-radius: 5px;
-            cursor: pointer; text-align: left; font-weight: 600; text-transform: uppercase;
+            cursor: pointer; text-align: left; font-weight: 600; 
+            text-transform: uppercase; font-family: 'Rajdhani';
         }
 
-        /* SECTIONS */
+        /* NEON LASER HOME SECTION */
+        .home-section {
+            position: relative; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            overflow: hidden; text-align: center;
+        }
+        .laser-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+        .laser-bg::before, .laser-bg::after {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background-image: repeating-linear-gradient(45deg, var(--neon-cyan) 0%, transparent 2%, var(--neon-purple) 4%, transparent 6%);
+            opacity: 0.15; animation: laser-rotate 20s linear infinite;
+        }
+        .laser-bg::after { animation-duration: 15s; animation-direction: reverse; opacity: 0.1; }
+
+        @keyframes laser-rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 12vw, 5.5rem); margin: 0;
+            text-transform: uppercase; letter-spacing: 5px;
+            text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-cyan);
+        }
+        .tagline { color: var(--neon-cyan); font-weight: bold; margin-top: 10px; font-size: 1rem; }
+
+        /* OTHER SECTIONS */
         .page-section {
             min-height: 100vh; display: none; 
             padding: 100px 20px 40px; text-align: center;
             flex-direction: column; align-items: center; justify-content: center;
             box-sizing: border-box;
         }
-
-        .hero-title {
-            font-size: clamp(2.2rem, 8vw, 5rem); margin: 0;
-            text-transform: uppercase; text-shadow: 0 0 20px var(--neon-purple);
-            line-height: 1;
-        }
-        .tagline { color: var(--neon-cyan); letter-spacing: 1px; margin-top: 10px; font-weight: bold; font-size: 0.9rem; }
-
         .feature-box {
-            background: rgba(0,0,0,0.85); padding: 20px; border-radius: 12px;
-            border: 1px solid var(--neon-cyan); width: 100%; max-width: 500px; margin-top: 20px;
-            line-height: 1.5; font-size: 0.95rem; box-sizing: border-box;
+            background: rgba(0,0,0,0.85); padding: 25px; border-radius: 12px;
+            border: 1px solid var(--neon-cyan); width: 100%; max-width: 550px;
+            line-height: 1.6; font-size: 1rem;
         }
 
-        /* GAMEPASS GRID (MOBILE FRIENDLY) */
-        .gamepass-grid {
+        /* GAMEPASS & GALLERY GRIDS */
+        .grid-container {
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px; width: 100%; max-width: 800px; margin: 20px auto;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px; width: 100%; max-width: 900px; margin-top: 20px;
         }
         .pass-card {
             background: var(--glass); border: 1px solid var(--neon-cyan);
-            padding: 15px; border-radius: 10px; font-size: 0.9rem;
+            padding: 15px; border-radius: 10px;
+        }
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 10px; width: 100%; max-width: 900px;
+        }
+        .gallery-grid img {
+            width: 100%; aspect-ratio: 16/9; object-fit: cover;
+            border-radius: 5px; border: 1px solid var(--neon-cyan);
         }
 
-        /* GALLERY (MOBILE FRIENDLY) */
-        #gallery-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 2000; overflow-y: auto; padding-top: 60px;
-        }
-        .gallery-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
-            gap: 10px; 
-            padding: 15px; 
-        }
-        .gallery-grid img { 
-            width: 100%; 
-            border-radius: 5px; 
-            border: 1px solid var(--neon-cyan); 
-            aspect-ratio: 16/9;
-            object-fit: cover;
-        }
-        .close-btn { position: fixed; top: 10px; right: 20px; font-size: 40px; color: white; background: none; border: none; z-index: 2001; cursor: pointer; }
-
-        /* MOBILE FIXES */
+        /* MOBILE OVERRIDES */
         @media (max-width: 600px) {
-            .hero-title { font-size: 2.5rem; }
-            .site-title { font-size: 1rem; letter-spacing: 2px; }
-            .feature-box { padding: 15px; font-size: 0.85rem; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
             .side-menu { width: 220px; }
+            .hero-title { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
-
-    <div id="bg-slider">
-        <div class="slide active" style="background-image: url('gallery photo/image1.jpg');"></div>
-        <div class="slide" style="background-image: url('gallery photo/image2.jpg');"></div>
-    </div>
 
     <nav>
         <div class="menu-icon" onclick="toggleMenu()">☰</div>
@@ -138,38 +123,30 @@
 
     <div class="side-menu" id="sideMenu">
         <button class="menu-btn" onclick="showSection('home')">Home</button>
-        <button class="menu-btn" onclick="showSection('experience')">The Experience</button>
-        <button class="menu-btn" onclick="showSection('events')">Events</button>
+        <button class="menu-btn" onclick="showSection('experience')">Experience</button>
         <button class="menu-btn" onclick="showSection('gamepass')">Gamepass</button>
-        <button class="menu-btn" onclick="openGallery()">Gallery</button>
+        <button class="menu-btn" onclick="showSection('gallery')">Gallery</button>
     </div>
 
-    <section id="home-section" class="page-section" style="display: flex;">
+    <section id="home-section" class="home-section" style="display: flex;">
+        <div class="laser-bg"></div>
         <h1 class="hero-title">SYNCED CLUB</h1>
         <p class="tagline">Where we sync, you feel the music</p>
     </section>
 
     <section id="experience-section" class="page-section">
-        <h1 class="hero-title" style="color:var(--neon-cyan)">THE EXPERIENCE</h1>
+        <h1 style="text-shadow: 0 0 15px var(--neon-cyan);">THE EXPERIENCE</h1>
         <div class="feature-box">
             <p><strong>Welcome to SYNCED Club! 🎧</strong></p>
             <p>Enjoy high-quality synced songs & global music vibes.</p>
-            <p>Experience the ultimate rooftop open-air atmosphere with neon energy.</p>
-            <p>✨ Worldwide tracks • 🔊 Best sound quality</p>
-        </div>
-    </section>
-
-    <section id="events-section" class="page-section">
-        <h1 class="hero-title" style="color:var(--neon-purple)">EVENTS</h1>
-        <div class="feature-box" style="border-color: var(--neon-purple);">
-            <p><strong>APRIL 18TH SPECIAL</strong></p>
-            <p>Big Surprise Prize celebration! Join us for elite energy and special music tracks.</p>
+            <p>Rooftop open-air atmosphere with neon reflection energy.</p>
+            <p>✨ Worldwide Tracks • 🔊 Best Sound Quality</p>
         </div>
     </section>
 
     <section id="gamepass-section" class="page-section">
-        <h1 class="hero-title">GAMEPASS</h1>
-        <div class="gamepass-grid">
+        <h1>GAMEPASS SHOP</h1>
+        <div class="grid-container">
             <div class="pass-card">VIP<br><span style="color:var(--neon-cyan)">1 Robux</span></div>
             <div class="pass-card">VVIP<br><span style="color:var(--neon-cyan)">149 Robux</span></div>
             <div class="pass-card">HD CMD<br><span style="color:var(--neon-cyan)">75 Robux</span></div>
@@ -178,45 +155,26 @@
         </div>
     </section>
 
-    <div id="gallery-overlay">
-        <button class="close-btn" onclick="closeGallery()">&times;</button>
+    <section id="gallery-section" class="page-section">
+        <h1>CLUB GALLERY</h1>
         <div class="gallery-grid">
-            <img src="gallery photo/image1.jpg">
-            <img src="gallery photo/image2.jpg">
-            <img src="gallery photo/image3.jpg">
-            <img src="gallery photo/image4.jpg">
-            <img src="gallery photo/image5.jpg">
-            <img src="gallery photo/image6.jpg">
-            <img src="gallery photo/image7.png"> <img src="gallery photo/image8.png"> <img src="gallery photo/image9.jpg">
+            <img src="image1.jpg"><img src="image2.jpg"><img src="image3.jpg">
+            <img src="image4.jpg"><img src="image5.jpg"><img src="image6.jpg">
+            <img src="image7.jpg"><img src="image8.jpg"><img src="image9.jpg">
         </div>
-    </div>
+    </section>
 
     <script>
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); }
 
-        function showSection(sectionId) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.style.display = 'none');
-            const target = document.getElementById(sectionId + '-section');
-            target.style.display = 'flex';
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+            const target = document.getElementById(id + '-section');
+            if(id === 'home') { target.style.display = 'flex'; } 
+            else { target.style.display = 'flex'; }
             toggleMenu();
-            window.scrollTo(0,0);
         }
 
-        function openGallery() { document.getElementById('gallery-overlay').style.display = 'block'; toggleMenu(); }
-        function closeGallery() { document.getElementById('gallery-overlay').style.display = 'none'; }
-
-        // BG SLIDER
-        const slides = document.querySelectorAll('.slide');
-        let current = 0;
-        setInterval(() => {
-            if(slides.length > 0) {
-                slides[current].classList.remove('active');
-                current = (current + 1) % slides.length;
-                slides[current].classList.add('active');
-            }
-        }, 5000);
-
-        // CLOCK
         function updateClock() {
             const now = new Date();
             const istTime = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour12: false });
@@ -227,3 +185,4 @@
     </script>
 </body>
 </html>
+
