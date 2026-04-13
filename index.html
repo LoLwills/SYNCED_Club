@@ -23,7 +23,7 @@
             color: white; overflow-x: hidden;
         }
 
-        /* NAVIGATION */
+        /* NAVIGATION & SIDE MENU */
         nav {
             position: fixed; top: 0; width: 100%; height: 60px;
             display: flex; justify-content: space-between; align-items: center;
@@ -34,7 +34,6 @@
         .site-title { font-size: 1.3rem; font-weight: 800; letter-spacing: 4px; }
         #ist-clock { margin-right: 15px; color: var(--neon-cyan); font-weight: bold; font-size: 0.9rem; }
 
-        /* SIDE MENU */
         .side-menu {
             position: fixed; left: -300px; top: 60px; height: 100vh;
             width: 260px; background: rgba(0,0,0,0.95);
@@ -49,37 +48,38 @@
             cursor: pointer; text-align: left; font-weight: 600; text-transform: uppercase;
         }
 
-        /* SHARP MOVING LASERS (NOT STRETCHY) */
+        /* CENTERED STARBURST LASERS */
         .home-section {
             position: relative; height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             overflow: hidden; background: #000;
         }
         .laser-container {
-            position: absolute; width: 100%; height: 100%;
+            position: absolute; top: 50%; left: 50%; width: 2px; height: 2px;
             pointer-events: none; z-index: 1;
         }
         .laser-beam {
-            position: absolute; height: 2px; width: 200%;
-            background: linear-gradient(90deg, transparent, var(--color), transparent);
-            filter: drop-shadow(0 0 8px var(--color));
-            opacity: 0.8;
-            animation: move-laser 4s linear infinite;
+            position: absolute; height: 1.5px; width: 100vw;
+            background: linear-gradient(90deg, var(--color), transparent);
+            filter: drop-shadow(0 0 10px var(--color));
+            opacity: 0.9;
+            transform-origin: left center;
+            animation: shoot-laser 2s ease-out forwards;
         }
 
-        @keyframes move-laser {
-            0% { transform: translateY(-100vh) rotate(var(--deg)); }
-            100% { transform: translateY(100vh) rotate(var(--deg)); }
+        @keyframes shoot-laser {
+            0% { width: 0; opacity: 1; transform: rotate(var(--deg)); }
+            100% { width: 150vw; opacity: 0; transform: rotate(var(--deg)); }
         }
 
         /* HERO CONTENT */
         .hero-container {
             position: relative; z-index: 10;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            padding: 40px; border-radius: 20px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            padding: 40px; border-radius: 25px;
             border: 1px solid var(--neon-cyan);
-            text-align: center;
+            text-align: center; box-shadow: 0 0 40px rgba(0,0,0,1);
         }
         .hero-title {
             font-size: clamp(2.5rem, 10vw, 5rem); margin: 0;
@@ -88,26 +88,13 @@
 
         /* GALLERY & LIGHTBOX */
         .page-section { min-height: 100vh; display: none; padding: 100px 20px 40px; text-align: center; flex-direction: column; align-items: center; }
-        
-        .gallery-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 15px; width: 100%; max-width: 900px;
-        }
-        .gallery-grid img {
-            width: 100%; aspect-ratio: 16/9; object-fit: cover;
-            border-radius: 8px; border: 2px solid var(--neon-cyan);
-            cursor: pointer; transition: 0.3s;
-        }
-        .gallery-grid img:hover { transform: scale(1.05); border-color: white; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 900px; }
+        .gallery-grid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; border: 2px solid var(--neon-cyan); cursor: pointer; transition: 0.3s; }
+        .gallery-grid img:hover { transform: scale(1.05); }
 
-        /* LIGHTBOX OVERLAY */
-        #lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); display: none;
-            justify-content: center; align-items: center; z-index: 2000;
-        }
-        #lightbox img { max-width: 90%; max-height: 80%; border: 2px solid white; border-radius: 10px; }
-        #lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 40px; cursor: pointer; color: white; }
+        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        #lightbox img { max-width: 90%; max-height: 85%; border: 2px solid white; border-radius: 10px; box-shadow: 0 0 50px var(--neon-cyan); }
+        #lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 50px; cursor: pointer; color: white; }
 
         @media (max-width: 600px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
@@ -128,17 +115,16 @@
     </div>
 
     <section id="home-section" class="home-section" style="display: flex;">
-        <div class="laser-container" id="laserBox">
-            </div>
+        <div class="laser-container" id="laserBox"></div>
         <div class="hero-container">
             <h1 class="hero-title">SYNCED CLUB</h1>
-            <p style="color: var(--neon-cyan); font-weight: bold; margin-top: 15px;">WHERE WE SYNC, YOU FEEL THE MUSIC</p>
+            <p style="color: var(--neon-cyan); font-weight: bold; margin-top: 15px; letter-spacing: 2px;">WHERE WE SYNC, YOU FEEL THE MUSIC</p>
         </div>
     </section>
 
     <section id="gallery-section" class="page-section">
         <h1>CLUB GALLERY</h1>
-        <p style="color: var(--neon-cyan); margin-bottom: 20px;">(Click any photo to view full size)</p>
+        <p style="color: var(--neon-cyan); margin-bottom: 20px;">Touch a photo to expand it</p>
         <div class="gallery-grid">
             <img src="image1.jpg" onclick="openLightbox(this.src)">
             <img src="image2.jpg" onclick="openLightbox(this.src)">
@@ -154,29 +140,26 @@
 
     <section id="experience-section" class="page-section">
         <div class="hero-container" style="max-width: 500px;">
-            <h2>THE VIBE</h2>
+            <h2>VIBE CHECK</h2>
             <p>Welcome to SYNCED Club! 🎧</p>
-            <p>Enjoy high-quality synced songs and amazing vibes.</p>
-            <p>✨ Worldwide tracks • 🔊 Best sound quality</p>
+            <p>High-quality synced songs & neon reflections.</p>
+            <p>✨ Global tracks • 🔊 Top-tier audio</p>
         </div>
     </section>
 
-    <div id="lightbox" onclick="closeLightbox()">
-        <span id="lightbox-close">&times;</span>
-        <img id="lightbox-img">
-    </div>
+    <div id="lightbox" onclick="closeLightbox()"><span id="lightbox-close">&times;</span><img id="lightbox-img"></div>
 
     <script>
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); }
 
         function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.style.display = 'none');
-            const target = document.getElementById(id + '-section');
-            target.style.display = 'flex';
+            document.getElementById(id + '-section').style.display = 'flex';
             toggleMenu();
+            window.scrollTo(0,0);
         }
 
-        /* SHARP LASER ENGINE */
+        /* CENTERED STARBURST LASERS */
         const colors = ['#00f3ff', '#bc13fe', '#ff00ff', '#39ff14', '#ff4500'];
         const laserBox = document.getElementById('laserBox');
 
@@ -185,25 +168,17 @@
             beam.className = 'laser-beam';
             const color = colors[Math.floor(Math.random() * colors.length)];
             const deg = Math.floor(Math.random() * 360);
-            const left = Math.floor(Math.random() * 100);
             
             beam.style.setProperty('--color', color);
             beam.style.setProperty('--deg', deg + 'deg');
-            beam.style.left = left + '%';
             
             laserBox.appendChild(beam);
-            setTimeout(() => beam.remove(), 4000);
+            setTimeout(() => beam.remove(), 2000);
         }
-        setInterval(spawnLaser, 300);
+        setInterval(spawnLaser, 150);
 
-        /* LIGHTBOX FUNCTIONS */
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
+        function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').style.display = 'flex'; }
+        function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
 
         function updateClock() {
             const now = new Date();
