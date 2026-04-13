@@ -12,7 +12,7 @@
             --neon-pink: #ff00ff;
             --neon-lime: #39ff14;
             --neon-orange: #ff4500;
-            --dark-bg: #030303;
+            --dark-bg: #020202;
         }
 
         body, html {
@@ -23,7 +23,7 @@
             color: white; overflow-x: hidden;
         }
 
-        /* NAVIGATION BAR */
+        /* NAVIGATION */
         nav {
             position: fixed; top: 0; width: 100%; height: 60px;
             display: flex; justify-content: space-between; align-items: center;
@@ -49,58 +49,46 @@
             cursor: pointer; text-align: left; font-weight: 600; text-transform: uppercase;
         }
 
-        /* FIXED LIGHT SPEED LASERS */
+        /* SHARP MOVING LASERS (NOT STRETCHY) */
         .home-section {
             position: relative; height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            overflow: hidden; text-align: center;
+            overflow: hidden; background: #000;
         }
-        .laser-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+        .laser-container {
+            position: absolute; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
         }
-        .laser-bg::before {
-            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: repeating-linear-gradient(45deg, 
-                transparent 0%, var(--neon-cyan) 1%, 
-                transparent 2%, var(--neon-purple) 3%, 
-                transparent 4%, var(--neon-pink) 5%, 
-                transparent 6%, var(--neon-lime) 7%, 
-                transparent 8%, var(--neon-orange) 9%, 
-                transparent 10%
-            );
-            opacity: 0.5;
-            animation: hyper-speed 3s linear infinite;
+        .laser-beam {
+            position: absolute; height: 2px; width: 200%;
+            background: linear-gradient(90deg, transparent, var(--color), transparent);
+            filter: drop-shadow(0 0 8px var(--color));
+            opacity: 0.8;
+            animation: move-laser 4s linear infinite;
         }
 
-        @keyframes hyper-speed {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes move-laser {
+            0% { transform: translateY(-100vh) rotate(var(--deg)); }
+            100% { transform: translateY(100vh) rotate(var(--deg)); }
         }
 
-        /* GLASS CONTENT BOX */
+        /* HERO CONTENT */
         .hero-container {
             position: relative; z-index: 10;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
             padding: 40px; border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+            border: 1px solid var(--neon-cyan);
+            text-align: center;
         }
-
         .hero-title {
             font-size: clamp(2.5rem, 10vw, 5rem); margin: 0;
-            text-transform: uppercase; letter-spacing: 5px;
-            text-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-cyan);
+            text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-cyan);
         }
 
-        /* PAGE SECTIONS */
-        .page-section {
-            min-height: 100vh; display: none; 
-            padding: 100px 20px 40px; text-align: center;
-            flex-direction: column; align-items: center; justify-content: center;
-        }
-
-        /* GALLERY (FIXED IMAGES) */
+        /* GALLERY & LIGHTBOX */
+        .page-section { min-height: 100vh; display: none; padding: 100px 20px 40px; text-align: center; flex-direction: column; align-items: center; }
+        
         .gallery-grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
             gap: 15px; width: 100%; max-width: 900px;
@@ -108,13 +96,20 @@
         .gallery-grid img {
             width: 100%; aspect-ratio: 16/9; object-fit: cover;
             border-radius: 8px; border: 2px solid var(--neon-cyan);
+            cursor: pointer; transition: 0.3s;
         }
+        .gallery-grid img:hover { transform: scale(1.05); border-color: white; }
 
-        /* MOBILE FIX */
-        @media (max-width: 600px) {
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-            .hero-title { font-size: 2.5rem; }
+        /* LIGHTBOX OVERLAY */
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: none;
+            justify-content: center; align-items: center; z-index: 2000;
         }
+        #lightbox img { max-width: 90%; max-height: 80%; border: 2px solid white; border-radius: 10px; }
+        #lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 40px; cursor: pointer; color: white; }
+
+        @media (max-width: 600px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -133,7 +128,8 @@
     </div>
 
     <section id="home-section" class="home-section" style="display: flex;">
-        <div class="laser-bg"></div>
+        <div class="laser-container" id="laserBox">
+            </div>
         <div class="hero-container">
             <h1 class="hero-title">SYNCED CLUB</h1>
             <p style="color: var(--neon-cyan); font-weight: bold; margin-top: 15px;">WHERE WE SYNC, YOU FEEL THE MUSIC</p>
@@ -141,29 +137,34 @@
     </section>
 
     <section id="gallery-section" class="page-section">
-        <h1 style="margin-bottom: 30px; text-shadow: 0 0 10px var(--neon-cyan);">GALLERY</h1>
+        <h1>CLUB GALLERY</h1>
+        <p style="color: var(--neon-cyan); margin-bottom: 20px;">(Click any photo to view full size)</p>
         <div class="gallery-grid">
-            <img src="image1.jpg"><img src="image2.jpg"><img src="image3.jpg">
-            <img src="image4.jpg"><img src="image5.jpg"><img src="image6.jpg">
-            <img src="image7.jpg"><img src="image8.jpg"><img src="image9.jpg">
+            <img src="image1.jpg" onclick="openLightbox(this.src)">
+            <img src="image2.jpg" onclick="openLightbox(this.src)">
+            <img src="image3.jpg" onclick="openLightbox(this.src)">
+            <img src="image4.jpg" onclick="openLightbox(this.src)">
+            <img src="image5.jpg" onclick="openLightbox(this.src)">
+            <img src="image6.jpg" onclick="openLightbox(this.src)">
+            <img src="image7.jpg" onclick="openLightbox(this.src)">
+            <img src="image8.jpg" onclick="openLightbox(this.src)">
+            <img src="image9.jpg" onclick="openLightbox(this.src)">
         </div>
     </section>
 
     <section id="experience-section" class="page-section">
         <div class="hero-container" style="max-width: 500px;">
+            <h2>THE VIBE</h2>
             <p>Welcome to SYNCED Club! 🎧</p>
             <p>Enjoy high-quality synced songs and amazing vibes.</p>
             <p>✨ Worldwide tracks • 🔊 Best sound quality</p>
         </div>
     </section>
 
-    <section id="gamepass-section" class="page-section">
-        <h1 style="color: var(--neon-purple);">GAMEPASS SHOP</h1>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
-            <div style="border: 1px solid var(--neon-cyan); padding: 20px; border-radius: 10px;">VIP: 1 Robux</div>
-            <div style="border: 1px solid var(--neon-cyan); padding: 20px; border-radius: 10px;">VVIP: 149 Robux</div>
-        </div>
-    </section>
+    <div id="lightbox" onclick="closeLightbox()">
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-img">
+    </div>
 
     <script>
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('open'); }
@@ -173,6 +174,35 @@
             const target = document.getElementById(id + '-section');
             target.style.display = 'flex';
             toggleMenu();
+        }
+
+        /* SHARP LASER ENGINE */
+        const colors = ['#00f3ff', '#bc13fe', '#ff00ff', '#39ff14', '#ff4500'];
+        const laserBox = document.getElementById('laserBox');
+
+        function spawnLaser() {
+            const beam = document.createElement('div');
+            beam.className = 'laser-beam';
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const deg = Math.floor(Math.random() * 360);
+            const left = Math.floor(Math.random() * 100);
+            
+            beam.style.setProperty('--color', color);
+            beam.style.setProperty('--deg', deg + 'deg');
+            beam.style.left = left + '%';
+            
+            laserBox.appendChild(beam);
+            setTimeout(() => beam.remove(), 4000);
+        }
+        setInterval(spawnLaser, 300);
+
+        /* LIGHTBOX FUNCTIONS */
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
         }
 
         function updateClock() {
