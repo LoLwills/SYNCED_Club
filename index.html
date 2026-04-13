@@ -20,7 +20,7 @@
             color: white; overflow: hidden;
         }
 
-        /* 1. BACKGROUND SLIDER */
+        /* BACKGROUND SLIDER - IMAGE 1 & 2 ONLY */
         #bg-slider {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; z-index: -1;
@@ -37,7 +37,7 @@
             background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.85) 100%);
         }
 
-        /* 2. TOP NAVIGATION BAR */
+        /* NAVIGATION BAR (AS PER SKETCH) */
         nav {
             position: fixed; top: 0; width: 100%; height: 70px;
             display: flex; justify-content: space-between; align-items: center;
@@ -48,7 +48,7 @@
         .site-title { font-size: 1.8rem; font-weight: 800; letter-spacing: 5px; text-transform: uppercase; }
         #ist-clock { margin-right: 20px; font-weight: bold; color: var(--neon-cyan); font-family: monospace; }
 
-        /* 3. SIDE MENU */
+        /* SIDE MENU (AS PER SKETCH) */
         .side-menu {
             position: fixed; left: 20px; top: 100px;
             display: flex; flex-direction: column; gap: 12px; z-index: 90;
@@ -58,6 +58,7 @@
             color: white; padding: 12px 25px; border-radius: 4px;
             cursor: pointer; transition: 0.4s; text-align: left;
             width: 200px; font-weight: 600; text-transform: uppercase;
+            font-family: 'Rajdhani', sans-serif;
         }
         .menu-btn:hover {
             border-color: var(--neon-cyan);
@@ -65,14 +66,14 @@
             transform: translateX(10px);
         }
 
-        /* 4. CENTER CONTENT */
+        /* CENTER CONTENT */
         .hero-content {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             text-align: center; width: 90%;
         }
         .hero-content h1 {
-            font-size: clamp(3rem, 10vw, 6rem); margin: 0;
+            font-size: clamp(3rem, 8vw, 6rem); margin: 0;
             text-transform: uppercase; letter-spacing: 10px;
             text-shadow: 0 0 20px var(--neon-purple);
         }
@@ -81,7 +82,7 @@
             color: var(--neon-cyan); font-weight: 400; text-transform: uppercase;
         }
 
-        /* 5. INFO BOX (EXACT INFO FROM PHOTOS) */
+        /* FEATURE BOX (INFO FROM SCREENSHOTS) */
         .feature-box {
             position: fixed; bottom: 30px; right: 30px;
             max-width: 380px; padding: 20px;
@@ -91,7 +92,7 @@
         }
         .feature-box p { margin: 5px 0; font-size: 1rem; line-height: 1.4; opacity: 0.9; }
 
-        /* 6. GALLERY POPUP */
+        /* GALLERY OVERLAY (9 IMAGES) */
         #gallery-overlay {
             display: none; position: fixed; top: 0; left: 0; 
             width: 100%; height: 100%; background: rgba(0,0,0,0.95); 
@@ -147,14 +148,14 @@
     <div id="gallery-overlay">
         <button class="close-btn" onclick="closeGallery()">&times;</button>
         <div class="gallery-grid">
-            <img src="image1.jpg"><img src="image2.jpg"><img src="image3.jpg">
-            <img src="image4.jpg"><img src="image5.jpg"><img src="image6.jpg">
-            <img src="image7.jpg"><img src="image8.jpg"><img src="image9.jpg">
+            <img src="image1.jpg"> <img src="image2.jpg"> <img src="image3.jpg">
+            <img src="image4.jpg"> <img src="image5.jpg"> <img src="image6.jpg">
+            <img src="image7.jpg"> <img src="image8.jpg"> <img src="image9.jpg">
         </div>
     </div>
 
     <script>
-        // BACKGROUND SLIDER (image1 & image2)
+        // SLIDER LOGIC
         const slides = document.querySelectorAll('.slide');
         let current = 0;
         setInterval(() => {
@@ -172,7 +173,7 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // GALLERY FUNCTIONS
+        // GALLERY TOGGLE
         function openGallery() { document.getElementById('gallery-overlay').style.display = 'block'; }
         function closeGallery() { document.getElementById('gallery-overlay').style.display = 'none'; }
     </script>
