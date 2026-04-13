@@ -48,7 +48,7 @@
         .site-title { font-size: 1.5rem; font-weight: 800; letter-spacing: 5px; }
         #ist-clock { margin-right: 15px; color: var(--neon-cyan); font-weight: bold; }
 
-        /* SIDE MENU */
+        /* SIDE MENU (CLOSED BY DEFAULT) */
         .side-menu {
             position: fixed; left: -280px; top: 60px; height: 100vh;
             width: 250px; background: rgba(0,0,0,0.98);
@@ -81,7 +81,7 @@
             line-height: 1.6; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
         }
 
-        /* GAMEPASS */
+        /* GAMEPASS GRID */
         .gamepass-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px; max-width: 800px; margin: 20px auto;
@@ -91,7 +91,7 @@
             padding: 15px; border-radius: 10px;
         }
 
-        /* GALLERY */
+        /* GALLERY POPUP */
         #gallery-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 2000; overflow-y: auto; padding-top: 60px;
@@ -104,8 +104,8 @@
 <body>
 
     <div id="bg-slider">
-        <div class="slide active" style="background-image: url('image1.jpg');"></div>
-        <div class="slide" style="background-image: url('image2.jpg');"></div>
+        <div class="slide active" style="background-image: url('gallery photo/image1.jpg');"></div>
+        <div class="slide" style="background-image: url('gallery photo/image2.jpg');"></div>
     </div>
 
     <nav>
@@ -132,8 +132,8 @@
         <div class="feature-box">
             <p><strong>Welcome to SYNCED Club! 🎧</strong></p>
             <p>Enjoy high-quality synced songs, amazing vibes, and a global music community.</p>
-            <p>Dance, chill, and feel the rhythm together.</p>
-            <p>✨ Worldwide tracks • 🔊 Best sound quality</p>
+            <p>Experience the ultimate rooftop vibe with open-air music and neon lights.</p>
+            <p>✨ Worldwide tracks • 🔊 Best sound quality • 🌍 Everyone welcome</p>
         </div>
     </section>
 
@@ -141,7 +141,7 @@
         <h1 class="hero-title" style="color:var(--neon-purple); font-size: 3rem;">EVENTS</h1>
         <div class="feature-box" style="border-color: var(--neon-purple);">
             <p><strong>APRIL 18TH SPECIAL</strong></p>
-            <p>Big Surprise Prize celebration! Don't miss out on the elite energy.</p>
+            <p>Big Surprise Prize celebration! Join us for elite energy and special music tracks.</p>
         </div>
     </section>
 
@@ -159,9 +159,15 @@
     <div id="gallery-overlay">
         <button class="close-btn" onclick="closeGallery()">&times;</button>
         <div class="gallery-grid">
-            <img src="image1.jpg"><img src="image2.jpg"><img src="image3.jpg">
-            <img src="image4.jpg"><img src="image5.jpg"><img src="image6.jpg">
-            <img src="image7.png"><img src="image8.png"><img src="image9.jpg">
+            <img src="gallery photo/image1.jpg">
+            <img src="gallery photo/image2.jpg">
+            <img src="gallery photo/image3.jpg">
+            <img src="gallery photo/image4.jpg">
+            <img src="gallery photo/image5.jpg">
+            <img src="gallery photo/image6.jpg">
+            <img src="gallery photo/image7.png">
+            <img src="gallery photo/image8.png">
+            <img src="gallery photo/image9.jpg">
         </div>
     </div>
 
@@ -178,7 +184,7 @@
         function openGallery() { document.getElementById('gallery-overlay').style.display = 'block'; toggleMenu(); }
         function closeGallery() { document.getElementById('gallery-overlay').style.display = 'none'; }
 
-        // BG SLIDER
+        // BG SLIDER LOGIC
         const slides = document.querySelectorAll('.slide');
         let current = 0;
         setInterval(() => {
@@ -189,7 +195,7 @@
             }
         }, 5000);
 
-        // IST CLOCK
+        // CLOCK LOGIC
         function updateClock() {
             const now = new Date();
             const istTime = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour12: false });
