@@ -48,7 +48,7 @@
         .site-title { font-size: 1.5rem; font-weight: 800; letter-spacing: 5px; }
         #ist-clock { margin-right: 15px; color: var(--neon-cyan); font-weight: bold; }
 
-        /* SIDE MENU (CLOSED BY DEFAULT) */
+        /* SIDE MENU */
         .side-menu {
             position: fixed; left: -280px; top: 60px; height: 100vh;
             width: 250px; background: rgba(0,0,0,0.98);
@@ -75,20 +75,10 @@
         }
         .tagline { color: var(--neon-cyan); letter-spacing: 2px; margin-top: 10px; font-weight: bold; }
 
-        /* THE BOX (MOVED TO EXPERIENCE) */
         .feature-box {
             background: rgba(0,0,0,0.8); padding: 25px; border-radius: 12px;
             border: 1px solid var(--neon-cyan); max-width: 500px; margin-top: 20px;
             line-height: 1.6; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-        }
-
-        /* TEAM GRID */
-        .team-grid {
-            display: grid; gap: 15px; max-width: 400px; margin: 20px auto;
-        }
-        .team-card {
-            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;
-            border-left: 4px solid var(--neon-purple); text-align: left;
         }
 
         /* GAMEPASS */
@@ -129,7 +119,6 @@
         <button class="menu-btn" onclick="showSection('experience')">The Experience</button>
         <button class="menu-btn" onclick="showSection('events')">Events</button>
         <button class="menu-btn" onclick="showSection('gamepass')">Gamepass</button>
-        <button class="menu-btn" onclick="showSection('team')">The Team</button>
         <button class="menu-btn" onclick="openGallery()">Gallery</button>
     </div>
 
@@ -167,20 +156,12 @@
         </div>
     </section>
 
-    <section id="team-section" class="page-section">
-        <h1 class="hero-title" style="font-size: 3rem; color: var(--neon-purple);">THE TEAM</h1>
-        <div class="team-grid">
-            <div class="team-card"><strong>SYNC x Mango</strong><br><span style="font-size: 0.8rem; color: var(--neon-cyan);">[OWNER]</span></div>
-            <div class="team-card"><strong>SYNC x Sara</strong><br><span style="font-size: 0.8rem; color: var(--neon-cyan);">[HEAD ADMIN]</span></div>
-        </div>
-    </section>
-
     <div id="gallery-overlay">
         <button class="close-btn" onclick="closeGallery()">&times;</button>
         <div class="gallery-grid">
             <img src="image1.jpg"><img src="image2.jpg"><img src="image3.jpg">
             <img src="image4.jpg"><img src="image5.jpg"><img src="image6.jpg">
-            <img src="image7.jpg"><img src="image8.jpg"><img src="image9.jpg">
+            <img src="image7.png"><img src="image8.png"><img src="image9.jpg">
         </div>
     </div>
 
@@ -190,8 +171,7 @@
         function showSection(sectionId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.style.display = 'none');
             const target = document.getElementById(sectionId + '-section');
-            target.style.display = (sectionId === 'home') ? 'flex' : 'flex';
-            if(sectionId !== 'home') target.style.display = 'flex';
+            target.style.display = 'flex';
             toggleMenu();
         }
 
@@ -202,9 +182,11 @@
         const slides = document.querySelectorAll('.slide');
         let current = 0;
         setInterval(() => {
-            slides[current].classList.remove('active');
-            current = (current + 1) % slides.length;
-            slides[current].classList.add('active');
+            if(slides.length > 0) {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }
         }, 5000);
 
         // IST CLOCK
