@@ -26,7 +26,7 @@
             position: fixed; top: 0; width: 100%; height: 60px;
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--neon-cyan); z-index: 1000;
+            border-bottom: 2px solid var(--neon-cyan); z-index: 1000;
         }
         .menu-icon { font-size: 30px; margin-left: 15px; cursor: pointer; color: var(--neon-cyan); }
         .site-title { font-size: 1.3rem; font-weight: 800; letter-spacing: 4px; }
@@ -48,32 +48,36 @@
             text-transform: uppercase; font-family: 'Rajdhani';
         }
 
-        /* NEON LASER HOME SECTION */
+        /* BRIGHT NEON LASER HOME SECTION */
         .home-section {
             position: relative; height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            overflow: hidden; text-align: center;
+            overflow: hidden; text-align: center; background: #000;
         }
         .laser-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+            pointer-events: none;
         }
         .laser-bg::before, .laser-bg::after {
-            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background-image: repeating-linear-gradient(45deg, var(--neon-cyan) 0%, transparent 2%, var(--neon-purple) 4%, transparent 6%);
-            opacity: 0.15; animation: laser-rotate 20s linear infinite;
+            content: ""; position: absolute; top: -100%; left: -100%; width: 300%; height: 300%;
+            background-image: repeating-linear-gradient(45deg, transparent 0%, var(--neon-cyan) 0.5%, transparent 1%, var(--neon-purple) 1.5%, transparent 2%);
+            opacity: 0.6; filter: blur(1px) drop-shadow(0 0 10px var(--neon-cyan));
+            animation: laser-rotate 10s linear infinite, laser-flicker 2s infinite;
         }
-        .laser-bg::after { animation-duration: 15s; animation-direction: reverse; opacity: 0.1; }
+        .laser-bg::after { animation-duration: 8s; animation-direction: reverse; opacity: 0.4; filter: blur(2px) drop-shadow(0 0 15px var(--neon-purple)); }
 
         @keyframes laser-rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes laser-flicker { 0%, 100% { opacity: 0.6; } 50% { opacity: 0.3; } }
 
         .hero-title {
+            position: relative; z-index: 10;
             font-size: clamp(2.5rem, 12vw, 5.5rem); margin: 0;
             text-transform: uppercase; letter-spacing: 5px;
-            text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-cyan);
+            text-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--neon-cyan), 0 0 60px #fff;
         }
-        .tagline { color: var(--neon-cyan); font-weight: bold; margin-top: 10px; font-size: 1rem; }
+        .tagline { position: relative; z-index: 10; color: var(--neon-cyan); font-weight: bold; margin-top: 10px; font-size: 1rem; }
 
-        /* OTHER SECTIONS */
+        /* PAGE SECTIONS */
         .page-section {
             min-height: 100vh; display: none; 
             padding: 100px 20px 40px; text-align: center;
@@ -82,34 +86,35 @@
         }
         .feature-box {
             background: rgba(0,0,0,0.85); padding: 25px; border-radius: 12px;
-            border: 1px solid var(--neon-cyan); width: 100%; max-width: 550px;
-            line-height: 1.6; font-size: 1rem;
+            border: 2px solid var(--neon-cyan); width: 100%; max-width: 550px;
+            line-height: 1.6; font-size: 1rem; box-shadow: 0 0 15px var(--neon-cyan);
         }
 
-        /* GAMEPASS & GALLERY GRIDS */
+        /* GRIDS */
         .grid-container {
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 15px; width: 100%; max-width: 900px; margin-top: 20px;
         }
         .pass-card {
             background: var(--glass); border: 1px solid var(--neon-cyan);
-            padding: 15px; border-radius: 10px;
+            padding: 15px; border-radius: 10px; font-weight: bold;
         }
         .gallery-grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 10px; width: 100%; max-width: 900px;
+            gap: 10px; width: 100%; max-width: 900px; padding: 20px;
         }
         .gallery-grid img {
             width: 100%; aspect-ratio: 16/9; object-fit: cover;
             border-radius: 5px; border: 1px solid var(--neon-cyan);
         }
 
-        /* MOBILE OVERRIDES */
+        /* MOBILE OPTIMIZATION */
         @media (max-width: 600px) {
             .gallery-grid { grid-template-columns: repeat(2, 1fr); }
             .side-menu { width: 220px; }
             .hero-title { font-size: 2.8rem; }
+            .grid-container { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -135,17 +140,17 @@
     </section>
 
     <section id="experience-section" class="page-section">
-        <h1 style="text-shadow: 0 0 15px var(--neon-cyan);">THE EXPERIENCE</h1>
+        <h1 style="color:var(--neon-cyan)">THE EXPERIENCE</h1>
         <div class="feature-box">
             <p><strong>Welcome to SYNCED Club! 🎧</strong></p>
-            <p>Enjoy high-quality synced songs & global music vibes.</p>
-            <p>Rooftop open-air atmosphere with neon reflection energy.</p>
-            <p>✨ Worldwide Tracks • 🔊 Best Sound Quality</p>
+            <p>Enjoy high-quality synced songs & global vibes.</p>
+            <p>Ultimate rooftop atmosphere with neon reflections.</p>
+            <p>✨ Worldwide Tracks • 🔊 High Fidelity Sound</p>
         </div>
     </section>
 
     <section id="gamepass-section" class="page-section">
-        <h1>GAMEPASS SHOP</h1>
+        <h1 style="color:var(--neon-purple)">SHOP</h1>
         <div class="grid-container">
             <div class="pass-card">VIP<br><span style="color:var(--neon-cyan)">1 Robux</span></div>
             <div class="pass-card">VVIP<br><span style="color:var(--neon-cyan)">149 Robux</span></div>
@@ -156,7 +161,7 @@
     </section>
 
     <section id="gallery-section" class="page-section">
-        <h1>CLUB GALLERY</h1>
+        <h1>GALLERY</h1>
         <div class="gallery-grid">
             <img src="image1.jpg"><img src="image2.jpg"><img src="image3.jpg">
             <img src="image4.jpg"><img src="image5.jpg"><img src="image6.jpg">
@@ -170,9 +175,9 @@
         function showSection(id) {
             document.querySelectorAll('section').forEach(s => s.style.display = 'none');
             const target = document.getElementById(id + '-section');
-            if(id === 'home') { target.style.display = 'flex'; } 
-            else { target.style.display = 'flex'; }
+            target.style.display = 'flex';
             toggleMenu();
+            window.scrollTo(0,0);
         }
 
         function updateClock() {
@@ -185,4 +190,3 @@
     </script>
 </body>
 </html>
-
